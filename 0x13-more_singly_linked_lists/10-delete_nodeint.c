@@ -1,42 +1,39 @@
 #include "lists.h"
+
 /**
-  *delete_nodeint_at_index - delete node at an index
+ *delete_nodeint_at_index - delete node at an index
   *@head: The head of the linked list
   *@index: index of the linked list
   *Return: 1 for successful and -1 for failure
-  */
+ */
 int delete_nodeint_at_index(listint_t **head, unsigned int index)
 {
+	listint_t *temp = *head;
+	listint_t *current = NULL;
 	unsigned int i = 0;
-	listint_t *tm;
-	listint_t *last_node;
 
-	if (!*head)
+	if (*head == NULL)
 		return (-1);
-	else
-{
+
 	if (index == 0)
-{
-	tm = *head;
-	*head = tm->next;
-	free(tm);
+	{
+		*head = (*head)->next;
+		free(temp);
+		return (1);
+	}
+
+	while (i < index - 1)
+	{
+		if (!temp || !(temp->next))
+			return (-1);
+		temp = temp->next;
+		i++;
+	}
+
+
+	current = temp->next;
+	temp->next = current->next;
+	free(current);
+
 	return (1);
-}
-i++;
-tm = (*head)->next;
-last_node = *head;
-while (tm)
-{
-	if (index == i)
-{
-	last_node->next = tm->next;
-	free(tm);
-	return (1);
-}
-last_node = tm;
-tm = tm->next;
-i++;
-}
-}
-return (-1);
 }
